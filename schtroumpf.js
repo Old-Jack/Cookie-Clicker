@@ -3,11 +3,12 @@ var multi = 1;
 var autoclc= 1;
 var bonus = 200;
 var temps = 30;
-var clic = 0;
-
+var IntervalID = 0;
+var IntervalID2 = 0;
 var price = 25;
 var autoprice = 500;
 var bonusprice = 50;
+var old_contenu = 0;
 
 var cliqueur = document.getElementById('clic');
 var display = document.getElementById('display');
@@ -16,7 +17,7 @@ var bonus1= document.getElementById("bonus");
 
 
 function affichageScore() {
-    score = score + multi + clic;
+    score = score + multi;
 
     document.getElementById("display").innerHTML = score;
 
@@ -65,40 +66,28 @@ function achatCliqueur() {
 
 function enclencheBonus() {
     if (score >= bonusprice) {
-    score = score - bonusprice;
-    document.getElementById("display").innerHTML = score;
-    var old_contenu = multi.firstChild();
-    multi += 200;
-    temps = 30;
-    bonus1.disabled=true;
-    bonusRetire();
-    IntervalID = setInterval(bonusRetire, 1000);
+	    score -= bonusprice;
+	    document.getElementById("display").innerHTML = score;
+	    old_contenu = multi;
+	    multi += 200;
+	    temps = 30;
+	    IntervalID2 = setInterval(bonusRetire, 1000);
     
-} else {
-    alert("Pas de Schtroumpfs !")
-}
+	} else {
+	    alert("Pas de Schtroumpfs !")
+	}
 }
 
 function bonusRetire() {
-
-    if (temps === 0) {
+    if (temps == 0) {
         multi = old_contenu;
-        document.getElementById("bonus".innerHTML) = 'Prix : ' + bonusprice + 'Schtroumpfs';
-        retireur();
-        clearInterval(IntervalID);
+        document.getElementById("bonus").innerHTML = 'Prix : ' + bonusprice + 'Schtroumpfs';
+        clearInterval(IntervalID2);
     } else {
 
         --temps;
         document.getElementById("display2").innerHTML = 'Temps: ' + temps + ' sec)';
     
-    }
-}
-
-function retireur() {
-     if (score >= bonusprice) {
-    bonus1.disabled = false
-    } else {
-        bonus1.disabled=true;
     }
 }
 
